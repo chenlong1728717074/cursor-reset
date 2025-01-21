@@ -3,6 +3,12 @@
 
 package files
 
+import (
+	"fmt"
+	"os"
+	"time"
+)
+
 func BackupFile(filePath string) error {
 	srcInfo, err := os.Stat(filePath)
 	if err != nil {
@@ -23,4 +29,9 @@ func BackupFile(filePath string) error {
 	}
 
 	return nil
+}
+
+func getFilePath() string {
+	homeDir, _ := os.UserHomeDir()
+	return filepath.Join(homeDir, ".config", "Cursor", "User", "globalStorage", "storage.json")
 }

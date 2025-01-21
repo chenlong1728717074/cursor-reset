@@ -3,27 +3,11 @@
 
 package files
 
-func BackupFile(filePath string) error {
-	srcInfo, err := os.Stat(filePath)
-	if err != nil {
-		return nil
-	}
-
-	data, err := os.ReadFile(filePath)
-	if err != nil {
-		return fmt.Errorf("读取文件失败: %v", err)
-	}
-
-	timestamp := time.Now().Format("20060102_150405")
-	backupPath := fmt.Sprintf("%s.backup_%s", filePath, timestamp)
-
-	// Unix 系统实现：仅保留基本权限位
-	if err := os.WriteFile(backupPath, data, srcInfo.Mode()&0777); err != nil {
-		return fmt.Errorf("创建备份文件失败: %v", err)
-	}
-
-	return nil
-}
+import (
+	"fmt"
+	"os"
+	"time"
+)
 
 func BackupFile(filePath string) error {
 	// 检查源文件是否存在
@@ -51,4 +35,9 @@ func BackupFile(filePath string) error {
 	}
 
 	return nil
+}
+
+func getFilePath() string {
+	homeDir, _ := os.UserHomeDir()
+	return filepath.Join(homeDir, "Library", "Application Support", "Cursor", "User", "globalStorage", "storage.json")
 }
